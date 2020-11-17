@@ -85,14 +85,27 @@ const NuevoCliente = () => {
                 // console.log(data.nuevoCliente);
                 router.push('/')    // Redireccionar a clientes
             } catch (error) {
-                console.log(error)
+                guardarMensaje(error.mensaje.replace('GraphQL error', ''))
+                setTimeout(() => {
+                    guardarMensaje(null)
+                }, 2000);
             }
         }
     })
 
+    // Mensaje
+    const mostrarMensaje = () => {
+        return (
+            <div className='bg-white py-2 px-3 w-full my-3 max-w-sm text-center mx-auto'>
+                <p>{mensaje}</p>
+            </div>
+        )
+    }
+
     return (
         <Layout>
             <h1 className='text-2xl text-gray-800 font-light'> Nuevo Cliente</h1>
+            {mensaje && mostrarMensaje()}
             <div className='flex justify-center mt-5'>
                 <div className='w-full max-w-lg'>
                     <form className='bg-white shadow-md px-8 pt-6 pb-8 mb-4' onSubmit={formik.handleSubmit}>
