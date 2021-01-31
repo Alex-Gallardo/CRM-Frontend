@@ -10,7 +10,8 @@ import PedidoReducer from './PedidoReducer'
 import {
     SELECCIONAR_CLIENTE,
     SELECCIONAR_PRODUCTO,
-    CANTIDAD_PRODUCTO
+    CANTIDAD_PRODUCTO,
+    ACTUALIZAR_TOTAL
 } from '../../types'
 
 const PedidoState = ({ children }) => {
@@ -33,18 +34,53 @@ const PedidoState = ({ children }) => {
     }
 
     // Agregar los producto
-    const agregarProducto = (producto)=>{
+    const agregarProducto = (productosSeleccionados)=>{
+
+        // Solucionar problema de reescritura de productos
+        let newState;
+
+        if(state.productos.length > 0){
+            // Tomar del segundo arreglo una copia para asignarlo al primero
+            newState = productosSeleccionados.map(producto => {
+                const nuevoObjeto = state.productos.find(productoState => productoState.id === producto.id)
+                return {...producto, ...nuevoObjeto}
+            })
+
+        }else{
+            newState = productosSeleccionados
+        }
+
         dispatch({
             type: SELECCIONAR_PRODUCTO,
-            payload: producto
+            payload: newState
+        })
+    }
+
+    // Modifica las cantidades de los productos
+    const cantidadProductos = nuevoProducto =>{
+        dispatch({
+            type: CANTIDAD_PRODUCTO,
+            payload: nuevoProducto
+        })
+    }
+
+    // Actualizar total
+    const actualizarTotal = ()=>{
+        dispatch({
+            type: ACTUALIZAR_TOTAL
         })
     }
 
     return (
         <PedidoContext.Provider
             value={{
+                cliente: state.cliente,
+                productos: state.productos,
+                total: state.total,
                 agregarCliente,
-                agregarProducto
+                agregarProducto,
+                cantidadProductos,
+                actualizarTotal,
             }}
         >
             {children}

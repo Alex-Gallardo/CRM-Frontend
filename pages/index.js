@@ -29,7 +29,7 @@ const Index = () => {
 
   // Si no hay datos lo manda al login
   // console.log('Data', data)
-  if(!data.obtenerClientesVendedor){
+  if (!data.obtenerClientesVendedor) {
     return router.push('/login')
   }
 
@@ -52,9 +52,12 @@ const Index = () => {
           </tr>
         </thead>
         <tbody className='bg-white'>
-          {data.obtenerClientesVendedor.map(cliente => (
-            <Cliente key={cliente.id} cliente={cliente}/>
-          ))}
+          {data.obtenerClientesVendedor.map(cliente => {
+            return (
+              <Cliente key={cliente.id} cliente={cliente} />
+            )
+          }
+          )}
         </tbody>
       </table>
     </Layout>
