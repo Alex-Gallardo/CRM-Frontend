@@ -32,6 +32,32 @@ const NUEVO_PEDIDO = gql`
     }
 `
 
+// CONSULTA PADRE PARA CACHE
+const OBTENER_PEDIDOS = gql`
+    query obtenerPedidosVendedor {
+        obtenerPedidosVendedor {
+            id
+            pedido {
+                id
+                cantidad
+                nombre
+            }
+            cliente {
+                id 
+                nombre 
+                apellido 
+                empresa 
+                email 
+                telefono 
+                vendedor 
+            }
+            vendedor
+            total
+            estado
+        }
+    }
+`
+
 const NuevoPedido = () => {
 
     // Estate
@@ -42,7 +68,21 @@ const NuevoPedido = () => {
     const { cliente, productos, total } = pedidoContext
 
     // Mutation para crear un nuevo pedido
-    const [nuevoPedido] = useMutation(NUEVO_PEDIDO)
+    const [nuevoPedido] = useMutation(NUEVO_PEDIDO, {
+        update(cache, { data: { nuevoPedido } }) {
+            const { obtenerPedidosVendedor } = cache.readQuery({
+                query: OBTENER_PEDIDOS
+            })
+
+            // Reescribir en el cache
+            cache.writeQuery({
+                query: OBTENER_PEDIDOS,
+                data: {
+                    obtenerPedidosVendedor: [...obtenerPedidosVendedor, nuevoPedido]
+                }
+            })
+        }
+    })
 
     // Rutas
     const router = useRouter()

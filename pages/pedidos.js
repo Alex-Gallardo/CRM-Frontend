@@ -14,7 +14,15 @@ const OBTENER_PEDIDOS = gql`
                 cantidad
                 nombre
             }
-            cliente
+            cliente {
+                id 
+                nombre 
+                apellido 
+                empresa 
+                email 
+                telefono 
+                vendedor 
+            }
             vendedor
             total
             estado
@@ -25,7 +33,7 @@ const OBTENER_PEDIDOS = gql`
 const Pedidos = () => {
 
     const { loading, data, error } = useQuery(OBTENER_PEDIDOS)
-    console.log(data, loading, error)
+    console.log('data PEdidos',data, loading, error)
 
     if (loading) return 'Cargando...'
 
