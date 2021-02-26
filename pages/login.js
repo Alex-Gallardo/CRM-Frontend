@@ -52,15 +52,19 @@ const Login = () => {
                 });
                 guardarMensaje('Autenticando...')
 
+
                 // Guardar token en localStorage
-                const { token } = data.autenticarUsuario
-                localStorage.setItem('token', token)
-                
                 setTimeout(() => {
-                    // Redirigir usuario a clientes
+                    const { token } = data.autenticarUsuario
+                    localStorage.setItem('token', token)
+                }, 1000)
+
+                // Redirigir usuario a clientes
+                setTimeout(() => {
                     guardarMensaje(null);
                     router.push('/');
                 }, 2000)
+                
             } catch (error) {
                 // El usuario no se creo correctamente
                 guardarMensaje(error.message.replace('GraphQL error: ', ''));
