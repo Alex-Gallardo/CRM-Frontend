@@ -30,9 +30,9 @@ export default (state, action) => {
             }
 
         case ACTUALIZAR_TOTAL:
-            return{
+            return {
                 ...state,
-                total: state.productos.reduce((nuevoTotal, articulo)=> nuevoTotal += articulo.precio * articulo.cantidad, 0)
+                total: state.productos.reduce((nuevoTotal, articulo) => nuevoTotal += articulo.precio * articulo.cantidad, 0)
             }
         default:
             return state

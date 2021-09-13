@@ -34,19 +34,19 @@ const PedidoState = ({ children }) => {
     }
 
     // Agregar los producto
-    const agregarProducto = (productosSeleccionados)=>{
+    const agregarProducto = (productosSeleccionados) => {
 
         // Solucionar problema de reescritura de productos
         let newState;
 
-        if(state.productos.length > 0){
+        if (state.productos.length > 0) {
             // Tomar del segundo arreglo una copia para asignarlo al primero
             newState = productosSeleccionados.map(producto => {
                 const nuevoObjeto = state.productos.find(productoState => productoState.id === producto.id)
-                return {...producto, ...nuevoObjeto}
+                return { ...producto, ...nuevoObjeto }
             })
 
-        }else{
+        } else {
             newState = productosSeleccionados
         }
 
@@ -57,7 +57,7 @@ const PedidoState = ({ children }) => {
     }
 
     // Modifica las cantidades de los productos
-    const cantidadProductos = nuevoProducto =>{
+    const cantidadProductos = nuevoProducto => {
         dispatch({
             type: CANTIDAD_PRODUCTO,
             payload: nuevoProducto
@@ -65,7 +65,7 @@ const PedidoState = ({ children }) => {
     }
 
     // Actualizar total
-    const actualizarTotal = ()=>{
+    const actualizarTotal = () => {
         dispatch({
             type: ACTUALIZAR_TOTAL
         })
